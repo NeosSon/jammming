@@ -8,12 +8,7 @@ export function Tracks() {
   const [trackUris, setTrackUris] = useState([]);
   const hash = window.location.hash;
   const token = hash.substring(1).split("&")[0].split("=")[1];
-  console.log(addedTracks);
-  console.log(trackUris);
-  console.log(search);
-  const style = {
-    width: search === "" ? 500 : 0,
-  };
+  
   const getTracks = async () => {
     const response = await fetch(
       `https://api.spotify.com/v1/search?q=${search}&type=track`,
@@ -36,6 +31,9 @@ export function Tracks() {
   const createPlaylist = async (userId) => {
     try {
       const playlistName = window.prompt("Playlist Name", "My Playlist");
+      if (playlistName === null) {
+        return;
+      }
       const response = await fetch(
         `https://api.spotify.com/v1/users/${userId}/playlists`,
         {
